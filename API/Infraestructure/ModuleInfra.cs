@@ -11,6 +11,7 @@ namespace API.Infraestructure
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<ApplicationDbContext>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<MessagingQeue>().As<IMessagingQeue>().InstancePerLifetimeScope();
         }
     }
 }

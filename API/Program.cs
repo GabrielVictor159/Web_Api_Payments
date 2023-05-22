@@ -1,4 +1,5 @@
 using API.Infraestructure;
+using API.Repository;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 
@@ -30,6 +31,7 @@ public class Startup
     public void ConfigureContainer(ContainerBuilder builder)
     {
         builder.RegisterModule(new ModuleInfra());
+        builder.RegisterModule(new ModuleRepository());
     }
 
     public void ConfigureServices(IServiceCollection services)

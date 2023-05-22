@@ -11,5 +11,7 @@ namespace API.Domain.DTO
         public String NomeTitular { get; set; } = "";
         public String DataValidade { get; set; } = "";
         public int CVV { get; set; } = 0;
+
+
     }
 }
