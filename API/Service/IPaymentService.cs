@@ -9,5 +9,6 @@ namespace API.Service
     public interface IPaymentService
     {
         Task<Object> AddPaymentAsync(PaymentDTO paymentDTO);
+        Task<Object> GetOneAsync(Guid id);
     }
 }

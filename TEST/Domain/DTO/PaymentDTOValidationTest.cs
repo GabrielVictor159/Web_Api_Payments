@@ -20,7 +20,7 @@ namespace TEST.Domain.DTO
             PaymentDTO dto = new PaymentDTO()
             {
                 NomeTitular = faker.Name.FullName(),
-                Number = faker.Finance.CreditCardNumber().Replace("-", "").ToString(),
+                Number = string.Join("", faker.Random.Digits(16)),
                 DataValidade = faker.Date.Future().ToString("MM/yy"),
                 CVV = int.Parse(faker.Finance.CreditCardCvv()),
                 Method = PaymentMethods.CARTAOMASTERCARD.ToString()

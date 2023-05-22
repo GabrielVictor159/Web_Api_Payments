@@ -70,8 +70,21 @@ namespace API.Service
             }
             else
             {
+                PaymentMessageDTO dtoMessage = new PaymentMessageDTO() { IdPedido = paymentCadastro.IdPedido, IdPayment = paymentCadastro.Id };
+                var json = JsonConvert.SerializeObject(dtoMessage);
+                _messagingQeue.SendFanoutExchange("Pagamento", json, true);
                 return paymentCadastro;
             }
+        }
+
+        public async Task<Object> GetOneAsync(Guid id)
+        {
+            var result = await _paymentRepository.GetPaymentByIdAsync(id);
+            if (result == null)
+            {
+                return "Nenhum Pagamento com esse id foi encontrado.";
+            }
+            return result;
         }
 
     }
