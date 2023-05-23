@@ -30,10 +30,11 @@ namespace API.Service
             List<string> mensagens = new();
             Payment payment;
             Payment? paymentCadastro = null;
-            await _messagingQeue.ReceiveFanoutExchange("Pedido", "PayamentPedidoQeue", async (message, channel, model, args) =>
+            Console.WriteLine("teste");
+            await _messagingQeue.ReceiveDefaultQueue("Pedido", async (message, channel, model, args) =>
             {
                 PedidoMessagingDTO pedido = JsonConvert.DeserializeObject<PedidoMessagingDTO>(message) ?? new PedidoMessagingDTO();
-
+                Console.WriteLine(pedido);
                 if (pedido.Id == paymentDTO.IdPedido)
                 {
                     await Task.Delay(TimeSpan.FromSeconds(3));
@@ -72,7 +73,7 @@ namespace API.Service
             {
                 PaymentMessageDTO dtoMessage = new PaymentMessageDTO() { IdPedido = paymentCadastro.IdPedido, IdPayment = paymentCadastro.Id };
                 var json = JsonConvert.SerializeObject(dtoMessage);
-                _messagingQeue.SendFanoutExchange("Pagamento", json, true);
+                _messagingQeue.SendDefaultQueue("Pagamentos", json, true);
                 return paymentCadastro;
             }
         }

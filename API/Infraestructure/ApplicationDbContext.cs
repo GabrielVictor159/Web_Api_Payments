@@ -12,7 +12,7 @@ namespace API.Infraestructure
         public DbSet<Payment> payments => Set<Payment>();
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(@"Server=db; Port=5432; Database=postgres; Uid=postgres; Pwd=postgres;");
+            optionsBuilder.UseNpgsql(@"Server=db_payment; Port=5432; Database=postgres; Uid=postgres; Pwd=postgres;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -1,5 +1,6 @@
 using API.Infraestructure;
 using API.Repository;
+using API.Service;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 
@@ -32,6 +33,7 @@ public class Startup
     {
         builder.RegisterModule(new ModuleInfra());
         builder.RegisterModule(new ModuleRepository());
+        builder.RegisterModule(new ModuleService());
     }
 
     public void ConfigureServices(IServiceCollection services)

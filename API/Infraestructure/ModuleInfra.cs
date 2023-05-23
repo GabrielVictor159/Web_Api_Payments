@@ -10,7 +10,7 @@ namespace API.Infraestructure
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<ApplicationDbContext>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<ApplicationDbContext>().AsSelf().SingleInstance();
             builder.RegisterType<MessagingQeue>().As<IMessagingQeue>().InstancePerLifetimeScope();
         }
     }
