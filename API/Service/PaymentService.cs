@@ -30,14 +30,11 @@ namespace API.Service
             List<string> mensagens = new();
             Payment payment;
             Payment? paymentCadastro = null;
-            Console.WriteLine("teste");
             await _messagingQeue.ReceiveDefaultQueue("Pedido", async (message, channel, model, args) =>
             {
                 PedidoMessagingDTO pedido = JsonConvert.DeserializeObject<PedidoMessagingDTO>(message) ?? new PedidoMessagingDTO();
-                Console.WriteLine(pedido);
                 if (pedido.Id == paymentDTO.IdPedido)
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(3));
                     payment = new Payment(pedido.ValorTotal, pedido.Id, paymentDTO.Method);
                     paymentCadastro = await _paymentRepository.AddPaymentAsync(payment);
 
@@ -45,14 +42,28 @@ namespace API.Service
                     {
                         if (channel != null && args != null)
                         {
-                            channel.BasicAck(args.DeliveryTag, multiple: false);
+                            try
+                            {
+                                channel.BasicAck(args.DeliveryTag, multiple: false);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine($"Error: {e}");
+                            }
                         }
                     }
                     else
                     {
                         if (channel != null && args != null)
                         {
-                            channel.BasicReject(args.DeliveryTag, requeue: true);
+                            try
+                            {
+                                channel.BasicReject(args.DeliveryTag, requeue: true);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine($"Error: {e}");
+                            }
                         }
                     }
                 }
@@ -60,7 +71,14 @@ namespace API.Service
                 {
                     if (channel != null && args != null)
                     {
-                        channel.BasicReject(args.DeliveryTag, requeue: true);
+                        try
+                        {
+                            channel.BasicReject(args.DeliveryTag, requeue: true);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine($"Error: {e}");
+                        }
                     }
                 }
             });

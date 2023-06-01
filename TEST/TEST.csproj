@@ -29,6 +29,6 @@
   </ItemGroup>
 
    <ItemGroup>
-    <ProjectReference Include="..\API\API.csproj" />
+    <ProjectReference Include="..\API\Web_Api_Payments.csproj" />
   </ItemGroup>
 </Project>

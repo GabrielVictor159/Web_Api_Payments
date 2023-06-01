@@ -1,0 +1,39 @@
+version: '3.4'
+
+services:
+  web_api_payments:
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:443;http://+:80
+      DBCONN: "Server=dbPayment;Port=5432;Database=postgres;User Id=postgres;Password=postgres"
+    ports:
+      - "80"
+      - "443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    networks:
+      - ecomerce
+
+  dbPayment:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    networks:
+      - ecomerce
+    ports:
+      - "5435:5432"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+networks:
+  ecomerce:
+    external:
+        name: "dockercompose17582886479543849482_ecomerce"

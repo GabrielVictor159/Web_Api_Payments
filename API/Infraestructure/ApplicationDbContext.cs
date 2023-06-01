@@ -12,7 +12,14 @@ namespace API.Infraestructure
         public DbSet<Payment> payments => Set<Payment>();
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(@"Server=db_payment; Port=5432; Database=postgres; Uid=postgres; Pwd=postgres;");
+            var connectionString = Environment.GetEnvironmentVariable("DBCONN");
+            optionsBuilder.UseNpgsql(connectionString, options =>
+            {
+                options.MigrationsHistoryTable("_MigrationHistory", "Ecommerce");
+                AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+            });
+
+            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

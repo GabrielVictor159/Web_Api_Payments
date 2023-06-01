@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  web_api_payments:
+    image: ${DOCKER_REGISTRY-}webapipayments
+    build:
+      context: .
+      dockerfile: API/Dockerfile
