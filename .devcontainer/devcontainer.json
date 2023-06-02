@@ -3,7 +3,7 @@
 {
 	"name": "C# (.NET) and PostgreSQL",
 	"dockerComposeFile": "docker-compose.yml",
-	"service": "app_payment",
+	"service": "web_api_payments",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 	"customizations": {
 		"vscode": {

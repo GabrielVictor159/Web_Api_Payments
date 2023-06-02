@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  app_payment:
+  web_api_payments:
     build:
       context: .
       dockerfile: Dockerfile
@@ -10,7 +10,6 @@ services:
     volumes:
       - ../..:/workspaces:cached
 
-    
     command: sleep infinity
 
     # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
@@ -22,7 +21,7 @@ services:
     # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 
-  db_payment:
+  dbPayment:
     image: postgres:14.3
     restart: unless-stopped
     volumes:
@@ -45,4 +44,4 @@ volumes:
 networks:
   my-network:
     external:
-      name: rabbitmq_my-network
+      name: web_api_crud_devcontainer_ecomerce

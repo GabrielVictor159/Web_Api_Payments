@@ -26,14 +26,13 @@ services:
       - ecomerce
     ports:
       - "5435:5432"
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
 
 networks:
   ecomerce:
     external:
-        name: "dockercompose17582886479543849482_ecomerce"
+      name: "dockercompose17582886479543849482_ecomerce"
+
+volumes:
+  postgres-data:
